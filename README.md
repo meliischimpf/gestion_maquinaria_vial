@@ -101,7 +101,7 @@ Sigue estos pasos para levantar el proyecto en tu máquina local:
         *(Asegúrate de que la base de datos `[tu_nombre_de_base_de_datos]` ya exista en tu sistema de gestión de bases de datos, por ejemplo, MySQL Workbench o phpMyAdmin).*
 	
 
-	* **Configuración del Mailer:**
+    * **Configuración del Mailer:**
 	```dotenv
 	MAIL_MAILER=smtp
 	MAIL_HOST=sandbox.smtp.mailtrap.io 
