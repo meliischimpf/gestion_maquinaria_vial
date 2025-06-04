@@ -40,9 +40,9 @@ Una aplicación web de gestión de recursos y operaciones para la construcción 
 
 Asegúrate de tener los siguientes programas instalados en tu sistema, estas versiones fueron las utilizadas:
 
-* **PHP:** `^8.4` (Laravel 12)
-* **Composer:** [Composer v2.8.5](https://getcomposer.org/download/)
-* **Node.js:** `22.13.1` (LTS recomendado)
+* **PHP:** `v8.4` (Laravel 12)
+* **Composer:** `v2.8.5` (https://getcomposer.org/download/)
+* **Node.js:** `v22.13.1` (LTS recomendado)
 * **NPM:** `v11.2.0` (viene con Node.js)
 * **Base de Datos:** MySQL.
 * **Servidor Web:** Apache (o el servidor de desarrollo integrado de PHP/Laravel).
@@ -102,7 +102,7 @@ Sigue estos pasos para levantar el proyecto en tu máquina local:
 	
 
 	* **Configuración del Mailer:**
-	
+	```dotenv
 	MAIL_MAILER=smtp
 	MAIL_HOST=sandbox.smtp.mailtrap.io 
 	MAIL_PORT=587        
@@ -111,7 +111,8 @@ Sigue estos pasos para levantar el proyecto en tu máquina local:
 	MAIL_ENCRYPTION=tls        
 	MAIL_FROM_ADDRESS="[tu_mail_a_mostrar]" 
 	MAIL_FROM_NAME="${[TU_APP_NAME]}"
-	
+	```
+ 
     * **Nombre de la Aplicación (Opcional):**
         ```dotenv
         APP_NAME="[TU_APP_NAME]"
