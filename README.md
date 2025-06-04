@@ -99,18 +99,17 @@ Sigue estos pasos para levantar el proyecto en tu máquina local:
         DB_PASSWORD=[tu_password_de_db]
         ```
         *(Asegúrate de que la base de datos `[tu_nombre_de_base_de_datos]` ya exista en tu sistema de gestión de bases de datos, por ejemplo, MySQL Workbench o phpMyAdmin).*
-	
 
     * **Configuración del Mailer:**
 	```dotenv
-	MAIL_MAILER=smtp
-	MAIL_HOST=sandbox.smtp.mailtrap.io 
-	MAIL_PORT=587        
-	MAIL_USERNAME=[tu_contraseña_de_mailtrap]
-	MAIL_PASSWORD=[tu_contraseña_de_mailtrap]
-	MAIL_ENCRYPTION=tls        
-	MAIL_FROM_ADDRESS="[tu_mail_a_mostrar]" 
-	MAIL_FROM_NAME="${[TU_APP_NAME]}"
+		MAIL_MAILER=smtp
+		MAIL_HOST=sandbox.smtp.mailtrap.io 
+		MAIL_PORT=587        
+		MAIL_USERNAME=[tu_contraseña_de_mailtrap]
+		MAIL_PASSWORD=[tu_contraseña_de_mailtrap]
+		MAIL_ENCRYPTION=tls        
+		MAIL_FROM_ADDRESS="[tu_mail_a_mostrar]" 
+		MAIL_FROM_NAME="${[TU_APP_NAME]}"
 	```
  
     * **Nombre de la Aplicación (Opcional):**
