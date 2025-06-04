@@ -1,7 +1,7 @@
 # Gestión de Maquinaria Vial
 
-![Laravel Logo](https://raw.githubusercontent.com/laravel/art/master/logo-lockup-red.svg)
-![Tailwind CSS Logo](https://tailwindcss.com/_next/static/media/tailwindcss-mark.3c5441fc7a190fd7981ce59d5e3c79e3.svg)
+![Laravel Logo]([https://raw.githubusercontent.com/laravel/art/master/logo-lockup-red.svg](https://logospng.org/download/laravel/logo-laravel-1024.png))
+![Tailwind CSS Logo]([https://tailwindcss.com/_next/static/media/tailwindcss-mark.3c5441fc7a190fd7981ce59d5e3c79e3.svg](https://logospng.org/download/tailwind-css/tailwind-css-4096.png))
 
 Una aplicación web de gestión de recursos y operaciones para la construcción desarrollada con Laravel y Tailwind CSS.
 
