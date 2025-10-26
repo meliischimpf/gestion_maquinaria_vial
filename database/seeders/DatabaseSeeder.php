@@ -21,15 +21,14 @@ class DatabaseSeeder extends Seeder
             MachineTypeSeeder::class,
             ProvinceSeeder::class,
             StatusSeeder::class,
-
-
-            // Datos para Test
             
-            //MachineSeeder::class,
-            //MaintenanceSeeder::class,
-            //WorkSeeder::class,
-            //AssignmentSeeder::class,
-            //UserSeeder::class,
+            
+            // Datos para Test
+            UserSeeder::class,
+            MachineSeeder::class,
+            MaintenanceSeeder::class,
+            WorkSeeder::class,
+            AssignmentSeeder::class,
          ]);
     }
 }

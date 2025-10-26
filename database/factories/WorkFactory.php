@@ -23,7 +23,30 @@ class WorkFactory extends Factory
 
         return [
             
-            'name' => $faker->word(),
+            'name' => function() use ($faker) {
+                $types = [
+                    'Autopista', 'Ruta Nacional', 'Ruta Provincial', 'Puente', 'Túnel',
+                    'Represa', 'Edificio', 'Barrio Cerrado', 'Planta Industrial', 'Aeropuerto',
+                    'Puerto', 'Tren', 'Subterráneo', 'Gasoducto', 'Oleoducto',
+                    'Parque Eólico', 'Planta Solar', 'Hospital', 'Escuela', 'Estadio'
+                ];
+                
+                $locations = [
+                    'Norte', 'Sur', 'Este', 'Oeste', 'Central', 'Buenos Aires', 'Córdoba',
+                    'Santa Fe', 'Mendoza', 'Tucumán', 'Entre Ríos', 'Salta', 'Misiones',
+                    'Chaco', 'Corrientes', 'Santiago del Estero', 'San Juan', 'Jujuy',
+                    'Río Negro', 'Neuquén', 'Formosa', 'Chubut', 'San Luis', 'Catamarca',
+                    'La Rioja', 'La Pampa', 'Santa Cruz', 'Tierra del Fuego'
+                ];
+                
+                $prefixes = ['Nuevo', 'Ampliación', 'Mejora', 'Reparación', 'Modernización'];
+                
+                $type = $faker->randomElement($types);
+                $location = $faker->randomElement($locations);
+                $prefix = $faker->optional(0.3)->randomElement($prefixes);
+                
+                return trim(($prefix ? $prefix . ' ' : '') . $type . ' ' . $location . ' ' . $faker->optional(0.2)->numberBetween(1, 10));
+            },
             'province_id' => $faker->numberBetween(1, Province::count()),
             'start_date' => $faker->dateTimeBetween('-1 year', 'now'),
             'end_date_planned' => $faker->dateTimeBetween('now', '+1 year'),
