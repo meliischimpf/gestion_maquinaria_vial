@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 echo "--- 1. Instalar dependencias de Composer (Composer V2 compatible) ---"
