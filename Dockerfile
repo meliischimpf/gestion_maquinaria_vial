@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN docker-php-ext-install pdo pdo_mysql bcmath mbstring exif pcntl opcache
+RUN docker-php-ext-install pdo pdo_mysql bcmath mbstring exif pcntl opcache pdo_pgsql pgsql
 
 RUN usermod -u 1000 www-data
 
@@ -24,15 +24,16 @@ RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default \
     && rm -rf /etc/nginx/sites-enabled/default.bak
 
 COPY . /var/www/html
+
 WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
 ENV APP_ENV production
 ENV APP_DEBUG false
 ENV COMPOSER_ALLOW_SUPERUSER 1
-
 EXPOSE 80
 
 COPY scripts/deploy.sh /usr/local/bin/deploy.sh
 RUN chmod +x /usr/local/bin/deploy.sh
+
 CMD ["/usr/local/bin/deploy.sh"]
