@@ -34,7 +34,8 @@ class StoreMachineRequest extends FormRequest
             'model' => 'required|string|max:255',
             'lifetime_km' => 'required|integer|min:0', 
             'current_km' => 'required|integer|min:0', 
-            'status_id' => 'required|exists:statuses,id', 
+            'status_id' => 'required|exists:statuses,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 

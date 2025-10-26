@@ -117,9 +117,18 @@
                     <div id="grid-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                         @foreach ($machines as $machine)
                             <div class="machine-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                                {{-- Machine Image Placeholder --}}
-                                <div class="machine-placeholder h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center relative">
-                                    <i class="fas fa-truck-monster text-4xl text-white"></i>
+                                {{-- Machine Image --}}
+                                <div class="h-48 bg-gray-200 flex items-center justify-center relative overflow-hidden">
+                                    @if($machine->image)
+                                        <img src="{{ $machine->image }}" 
+                                             alt="{{ $machine->brand }} {{ $machine->model }}" 
+                                             class="w-full h-full object-cover"
+                                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format&fit=crop&q=80';">
+                                    @else
+                                        <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center">
+                                            <i class="fas fa-truck-monster text-6xl text-white opacity-50"></i>
+                                        </div>
+                                    @endif
                                     <div class="absolute top-2 right-2">
                                         @php
                                             $statusClass = '';

@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         
         $this->call([
+            // Seeders de configuración
             ParameterSeeder::class,
             AssignmentEndSeeder::class,
             MaintenanceTypeSeeder::class,
@@ -22,13 +23,13 @@ class DatabaseSeeder extends Seeder
             ProvinceSeeder::class,
             StatusSeeder::class,
             
-            
-            // Datos para Test
+            // Datos de prueba
             UserSeeder::class,
             MachineSeeder::class,
-            MaintenanceSeeder::class,
             WorkSeeder::class,
             AssignmentSeeder::class,
+            MaintenanceSeeder::class,
+            
          ]);
     }
 }

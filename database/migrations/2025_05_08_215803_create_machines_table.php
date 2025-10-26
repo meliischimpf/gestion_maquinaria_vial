@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
             $table->integer('current_km');
             $table->integer('lifetime_km');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@
                     <h3 class="text-lg font-semibold mb-4">{{ __("Formulario de Creación de Máquina") }}</h3>
 
                     <div>
-                        <form action="{{ route('machine.store') }}" method="POST">
+                        <form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             
                             <div class="mb-4"> 
@@ -77,7 +77,23 @@
                                 <label for="current_km" class="block text-sm font-medium text-gray-700 dark:text-gray-200">KM Actual</label>
                                 <input type="number" 
                                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 sm:text-sm" 
-                                       id="current_km" name="current_km" required min="0"> 
+                                       id="current_km" name="current_km" required min="0">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Imagen de la Máquina</label>
+                                <input type="file" 
+                                       class="mt-1 block w-full text-sm text-gray-500
+                                              file:mr-4 file:py-2 file:px-4
+                                              file:rounded-md file:border-0
+                                              file:text-sm file:font-semibold
+                                              file:bg-blue-50 file:text-blue-700
+                                              hover:file:bg-blue-100"
+                                       id="image" name="image" accept="image/*">
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Formatos: jpeg, png, jpg, gif (Máx. 2MB)</p>
+                                @error('image')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                                 @error('current_km')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror

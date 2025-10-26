@@ -61,11 +61,27 @@ class MachineController extends Controller
      */
     public function store(StoreMachineRequest $request)
     {
+        $data = $request->validated();
+        $data['serial_number'] = strtoupper($data['serial_number']);
         
-        Machine::create($request->validated() + [
-            'serial_number' => strtoupper($request->input('serial_number')), 
+        // Manejar la carga de la imagen
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('machines', 'public');
+            $data['image'] = $imagePath;
+        } else {
+            // Asignar una imagen por defecto basada en el tipo de máquina
+            $defaultImages = [
+                1 => 'machines/excavadora1.jpg',
+                2 => 'machines/retroexcavadora1.jpg',
+                3 => 'machines/cargador1.jpg',
+                4 => 'machines/bulldozer1.jpg',
+                5 => 'machines/volquete1.jpg'
+            ];
             
-        ]);
+            $data['image'] = $defaultImages[$data['type_id']] ?? 'machines/default.jpg';
+        }
+        
+        Machine::create($data);
         
         return redirect('/machines')->with('success', 'Máquina creada correctamente.');
     }
@@ -134,8 +150,21 @@ class MachineController extends Controller
             return redirect('/machines')->with('error', 'No se puede actualizar una máquina que se encuentra en uso.');
         }
 
-        $validatedData = $request->validated();
-        $machine->update($validatedData);
+        $data = $request->validated();
+        
+        // Manejar la actualización de la imagen
+        if ($request->hasFile('image')) {
+            // Eliminar la imagen anterior si existe
+            if ($machine->image && \Storage::disk('public')->exists($machine->image)) {
+                \Storage::disk('public')->delete($machine->image);
+            }
+            
+            // Guardar la nueva imagen
+            $imagePath = $request->file('image')->store('machines', 'public');
+            $data['image'] = $imagePath;
+        }
+        
+        $machine->update($data);
 
         return redirect('/machines')->with('success', 'Máquina actualizada correctamente.');
     }

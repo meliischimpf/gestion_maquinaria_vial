@@ -18,6 +18,7 @@ class Machine extends Model
         'status_id',
         'current_km',
         'lifetime_km',
+        'image',
     ];
 
     public function type()

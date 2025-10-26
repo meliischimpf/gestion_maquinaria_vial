@@ -12,7 +12,7 @@
                     <h3 class="text-lg font-semibold mb-4">{{ __("Formulario de Actualización de Máquina") }}</h3>
 
                     <div>
-                        <form action="{{ route('machine.update', $machine->id) }}" method="POST">
+                        <form action="{{ route('machine.update', $machine->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
 
@@ -86,6 +86,27 @@
                                     @endforeach
                                 </select>
                                 @error('status_id')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Imagen de la Máquina</label>
+                                @if($machine->image && \Storage::disk('public')->exists($machine->image))
+                                    <div class="mt-1 mb-2">
+                                        <img src="{{ asset('storage/' . $machine->image) }}" alt="{{ $machine->brand }} {{ $machine->model }}" class="h-32 w-auto rounded-md">
+                                    </div>
+                                @endif
+                                <input type="file" 
+                                       class="mt-1 block w-full text-sm text-gray-500
+                                              file:mr-4 file:py-2 file:px-4
+                                              file:rounded-md file:border-0
+                                              file:text-sm file:font-semibold
+                                              file:bg-blue-50 file:text-blue-700
+                                              hover:file:bg-blue-100"
+                                       id="image" name="image" accept="image/*">
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Deja en blanco para mantener la imagen actual. Formatos: jpeg, png, jpg, gif (Máx. 2MB)</p>
+                                @error('image')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
