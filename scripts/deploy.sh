@@ -1,24 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-echo "--- 1. Instalar dependencias de Composer ---"
-composer install --no-dev --optimize-autoload
+set -e
+
+echo "--- 1. Instalar dependencias de Composer (Composer V2 compatible) ---"
+composer install --no-dev --optimize-autoloader
+php artisan cache:clear
+php artisan config:cache
+php artisan view:cache
 
 echo "--- 2. Instalar y compilar assets de NPM (frontend) ---"
 npm install
 npm run build
 
-echo "--- 3. Optimizar Laravel ---"
-php artisan view:clear
-php artisan cache:clear 
-php artisan config:cache
-
-echo "--- 4. Ejecutar Migraciones ---"
+echo "--- 3. Ejecutar Migraciones de Base de Datos ---"
 php artisan migrate --force
 
-echo "--- 5. Iniciar Servidor ---"
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+echo "--- 4. Arreglar permisos ---"
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-composer install --no-dev --optimize-autoload
-npm install
-npm run build
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+echo "--- Despliegue completado. El servicio web se iniciará a continuación. ---"
