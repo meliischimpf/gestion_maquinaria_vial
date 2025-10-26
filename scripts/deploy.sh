@@ -1,32 +1,24 @@
 #!/usr/bin/env bash
 
-set -e
-
 echo "--- 1. Instalar dependencias de Composer ---"
-composer install --no-dev --prefer-dist --optimize-autoloader
+composer install --no-dev --optimize-autoload
 
 echo "--- 2. Instalar y compilar assets de NPM (frontend) ---"
 npm install
 npm run build
 
 echo "--- 3. Optimizar Laravel ---"
-php artisan clear-compiled --env=production
-php artisan config:clear
-php artisan route:clear
 php artisan view:clear
-php artisan cache:clear
-
+php artisan cache:clear 
 php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan optimize
 
-echo "--- 4. Ejecutar Migraciones de la base de datos ---"
+echo "--- 4. Ejecutar Migraciones ---"
 php artisan migrate --force
 
-echo "--- Despliegue finalizado ---"
+echo "--- 5. Iniciar Servidor ---"
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 
-
-echo "--- Iniciando PHP-FPM y Nginx ---"
-service php8.2-fpm start
-nginx -g "daemon off;" 
+composer install --no-dev --optimize-autoload
+npm install
+npm run build
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
