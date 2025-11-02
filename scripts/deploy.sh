@@ -10,6 +10,7 @@ php artisan db:seed --force
 php artisan cache:clear
 php artisan config:cache
 php artisan view:cache
+php artisan optimize:clear
 
 echo "--- 2. Arreglar permisos finales ---"
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
