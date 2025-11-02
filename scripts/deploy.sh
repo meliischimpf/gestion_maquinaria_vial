@@ -5,6 +5,7 @@ set -e
 cd /var/www/html
 echo "--- 1. Ejecutar Migraciones y Optimizar la Aplicación ---"
 php artisan migrate --force
+php artisan db:seed --force
 
 php artisan cache:clear
 php artisan config:cache
