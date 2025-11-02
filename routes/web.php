@@ -24,6 +24,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// temporary route bc not seeding on production
+Route::get('/logs', function() {
+    if (!file_exists(storage_path('logs/laravel.log'))) {
+        return 'No se encontró el archivo de logs';
+    }
+    return response()->file(storage_path('logs/laravel.log'));
+})->middleware('auth.basic');
+
+
 require __DIR__.'/auth.php';
 require_once __DIR__.'/machines.php';
 require_once __DIR__.'/works.php';
