@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -ex  # Enable debug mode
 
 cd /var/www/html
@@ -47,7 +46,7 @@ php artisan view:clear
 php artisan env
 
 echo "--- 2. Running migrations ---"
-php artisan migrate --force
+php artisan migrate:fresh --force
 
 echo "--- 3. Running seeders ---"
 php artisan db:seed --force
