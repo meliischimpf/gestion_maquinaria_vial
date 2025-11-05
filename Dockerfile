@@ -38,4 +38,4 @@ ENV APP_DEBUG false
 ENV COMPOSER_ALLOW_SUPERUSER 1
 EXPOSE 80
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
+CMD ["sh", "-c", "/usr/local/bin/deploy.sh && php artisan serve --host=0.0.0.0 --port=80"]
