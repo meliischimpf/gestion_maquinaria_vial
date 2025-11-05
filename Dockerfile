@@ -19,23 +19,34 @@ RUN docker-php-ext-install pdo pdo_mysql bcmath mbstring exif pcntl opcache pdo_
 COPY . /var/www/html
 WORKDIR /var/www/html
 
+# Configura las variables de entorno necesarias para el build
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    APP_ENV=production \
+    APP_DEBUG=false
+
+# Instala dependencias
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
+# Configura permisos
 RUN usermod -u 1000 www-data
 RUN chown -R www-data:www-data /var/www/html
 
+# Configura Nginx
 COPY nginx.conf /etc/nginx/sites-available/default
 RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default \
     && rm -rf /etc/nginx/sites-enabled/default.bak
 
+# Copia y ejecuta el script de despliegue
 COPY scripts/deploy.sh /usr/local/bin/deploy.sh
 RUN chmod +x /usr/local/bin/deploy.sh
 
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Ejecuta las migraciones y seeders durante el build
+RUN /usr/local/bin/deploy.sh
+
+# Expone el puerto 80
 EXPOSE 80
 
-CMD ["sh", "-c", "/usr/local/bin/deploy.sh && php artisan serve --host=0.0.0.0 --port=80"]
+# Comando de inicio
+CMD ["nginx", "-g", "daemon off;"]
