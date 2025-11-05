@@ -9,38 +9,41 @@ echo "Directorio actual: $(pwd)"
 echo "Contenido del directorio:"
 ls -la
 
+# Verificar variables de entorno de la base de datos
+echo "--- Verificando variables de entorno ---"
+echo "DB_CONNECTION=${DB_CONNECTION:-No definido}"
+echo "DB_HOST=${DB_HOST:-No definido}"
+echo "DB_PORT=${DB_PORT:-No definido}"
+echo "DB_DATABASE=${DB_DATABASE:-No definido}"
+echo "DB_USERNAME=${DB_USERNAME:-No definido}"
+
+# Esperar a que la base de datos esté lista (solo para PostgreSQL)
+if [ "${DB_CONNECTION}" = "pgsql" ]; then
+    echo "--- Esperando a que PostgreSQL esté listo ---"
+    until PGPASSWORD=$DB_PASSWORD pg_isready -h "$DB_HOST" -U "$DB_USERNAME" -d "$DB_DATABASE" -p "$DB_PORT"; do
+        echo "Esperando a que PostgreSQL esté listo..."
+        sleep 2
+    done
+fi
+
 echo "--- 1. Limpiar caché ---"
-php artisan cache:clear
 php artisan config:clear
+php artisan cache:clear
 php artisan view:clear
 
-echo "--- 2. Mostrar variables de entorno ---"
-php artisan tinker --execute="print_r($_ENV);" || echo "No se pudieron mostrar las variables de entorno"
+echo "--- 2. Ejecutar migraciones ---"
+php artisan migrate --force
 
-echo "--- 3. Verificar conexión a la base de datos ---"
-php artisan tinker --execute="try { DB::connection()->getPdo(); echo 'Conexión exitosa a la base de datos'; } catch (\Exception \$e) { echo 'Error de conexión: ' . \$e->getMessage(); }"
+echo "--- 3. Ejecutar seeders ---"
+php artisan db:seed --force
 
-echo "--- 4. Listar migraciones pendientes ---"
-php artisan migrate:status
-
-echo "--- 5. Ejecutar migraciones y seeders ---"
-php artisan migrate:fresh --seed --force -v
-
-echo "--- 6. Verificar seeders ejecutados ---"
-php artisan db:seed --class=DatabaseSeeder --force -v
-
-echo "--- 7. Optimizar ---"
+echo "--- 4. Optimizar ---"
 php artisan config:cache
 php artisan view:cache
 php artisan optimize
 
-echo "--- 8. Verificar rutas ---"
-php artisan route:list
-
-echo "=== FIN DEL DESPLIEGUE ==="
-
-echo "--- 9. Arreglar permisos finales ---"
+echo "--- 5. Arreglar permisos ---"
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-echo "--- Despliegue completado. El servicio web se iniciará a continuación. ---"
+echo "=== FIN DEL DESPLIEGUE ==="
